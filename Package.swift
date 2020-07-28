@@ -26,7 +26,7 @@ let package = Package(
     .target(name: "CalendarKit",
             dependencies: ["DateToolsSwift"],
             path: "Source",
-            resources: [])
+            resources: [.process("Localizations")])
   ],
   swiftLanguageVersions: [.version("5.3")]
 )
