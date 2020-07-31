@@ -65,7 +65,7 @@ class CustomCalendarExampleController: DayViewController, DatePickerControllerDe
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Change Date",
                                                        style: .plain,
                                                        target: self,
-                                                       action: #selector(ExampleController.presentDatePicker))
+                                                       action: #selector(CustomCalendarExampleController.presentDatePicker))
     navigationController?.navigationBar.isTranslucent = false
     dayView.autoScrollToFirstEvent = true
     reloadData()
@@ -124,45 +124,45 @@ class CustomCalendarExampleController: DayViewController, DatePickerControllerDe
   }
   
   private func generateEventsForDate(_ date: Date) -> [EventDescriptor] {
-    var workingDate = date.add(TimeChunk.dateComponents(hours: Int(arc4random_uniform(10) + 5)))
+    //var workingDate = date.add(TimeChunk.dateComponents(hours: Int(arc4random_uniform(10) + 5)))
     var events = [Event]()
-    
-    for i in 0...4 {
-      let event = Event()
-      let duration = Int(arc4random_uniform(160) + 60)
-      let datePeriod = TimePeriod(beginning: workingDate,
-                                  chunk: TimeChunk.dateComponents(minutes: duration))
-      
-      event.startDate = datePeriod.beginning!
-      event.endDate = datePeriod.end!
-      
-      var info = data[Int(arc4random_uniform(UInt32(data.count)))]
-      
-      let timezone = dayView.calendar.timeZone
-      print(timezone)
-      info.append(datePeriod.beginning!.format(with: "dd.MM.YYYY", timeZone: timezone))
-      info.append("\(datePeriod.beginning!.format(with: "HH:mm", timeZone: timezone)) - \(datePeriod.end!.format(with: "HH:mm", timeZone: timezone))")
-      event.text = info.reduce("", {$0 + $1 + "\n"})
-      event.color = colors[Int(arc4random_uniform(UInt32(colors.count)))]
-      event.isAllDay = Int(arc4random_uniform(2)) % 2 == 0
-      
-      // Event styles are updated independently from CalendarStyle
-      // hence the need to specify exact colors in case of Dark style
-      if #available(iOS 12.0, *) {
-        if traitCollection.userInterfaceStyle == .dark {
-          event.textColor = textColorForEventInDarkTheme(baseColor: event.color)
-          event.backgroundColor = event.color.withAlphaComponent(0.6)
-        }
-      }
-      
-      events.append(event)
-      
-      let nextOffset = Int(arc4random_uniform(250) + 40)
-      workingDate = workingDate.add(TimeChunk.dateComponents(minutes: nextOffset))
-      event.userInfo = String(i)
-    }
-
-    print("Events for \(date)")
+//
+//    for i in 0...4 {
+//      let event = Event()
+//      let duration = Int(arc4random_uniform(160) + 60)
+//      let datePeriod = TimePeriod(beginning: workingDate,
+//                                  chunk: TimeChunk.dateComponents(minutes: duration))
+//
+//      event.startDate = datePeriod.beginning!
+//      event.endDate = datePeriod.end!
+//
+//      var info = data[Int(arc4random_uniform(UInt32(data.count)))]
+//
+//      let timezone = dayView.calendar.timeZone
+//      print(timezone)
+//      info.append(datePeriod.beginning!.format(with: "dd.MM.YYYY", timeZone: timezone))
+//      info.append("\(datePeriod.beginning!.format(with: "HH:mm", timeZone: timezone)) - \(datePeriod.end!.format(with: "HH:mm", timeZone: timezone))")
+//      event.text = info.reduce("", {$0 + $1 + "\n"})
+//      event.color = colors[Int(arc4random_uniform(UInt32(colors.count)))]
+//      event.isAllDay = Int(arc4random_uniform(2)) % 2 == 0
+//
+//      // Event styles are updated independently from CalendarStyle
+//      // hence the need to specify exact colors in case of Dark style
+//      if #available(iOS 12.0, *) {
+//        if traitCollection.userInterfaceStyle == .dark {
+//          event.textColor = textColorForEventInDarkTheme(baseColor: event.color)
+//          event.backgroundColor = event.color.withAlphaComponent(0.6)
+//        }
+//      }
+//
+//      events.append(event)
+//
+//      let nextOffset = Int(arc4random_uniform(250) + 40)
+//      workingDate = workingDate.add(TimeChunk.dateComponents(minutes: nextOffset))
+//      event.userInfo = String(i)
+//    }
+//
+//    print("Events for \(date)")
     return events
   }
   
@@ -221,6 +221,7 @@ class CustomCalendarExampleController: DayViewController, DatePickerControllerDe
   }
   
   private func generateEventNearDate(_ date: Date) -> EventDescriptor {
+    fatalError()
     let duration = Int(arc4random_uniform(160) + 60)
     let startDate = date.subtract(TimeChunk.dateComponents(minutes: Int(CGFloat(duration) / 2)))
     let event = Event()

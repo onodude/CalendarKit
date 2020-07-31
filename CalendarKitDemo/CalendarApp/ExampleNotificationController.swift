@@ -1,8 +1,6 @@
 import CalendarKit
-import DateToolsSwift
 
-class ExampleNotificationController: UIViewController {
-  
+final class ExampleNotificationController: UIViewController {
   lazy var timelineContainer: TimelineContainer = {
     let timeline = TimelineView()
     timeline.frame.size.height = timeline.fullHeight
@@ -19,18 +17,14 @@ class ExampleNotificationController: UIViewController {
     view.addSubview(timelineContainer)
     timelineContainer.timeline.date = Date()
     
-    let date = Date()
+    let start = Date()
+    let end = Calendar.current.date(byAdding: .hour, value: 1, to: start)!
     let event = Event()
-    let duration = 80
-    let datePeriod = TimePeriod(beginning: date,
-                                chunk: TimeChunk.dateComponents(minutes: duration))
     
-    event.startDate = datePeriod.beginning!
-    event.endDate = datePeriod.end!
+    event.startDate = start
+    event.endDate = end
 
-    var info = ["Compliance report"]
-    info.append("\(datePeriod.beginning!.format(with: "dd.MM"))")
-    info.append("\(datePeriod.beginning!.format(with: "HH:mm")) - \(datePeriod.end!.format(with: "HH:mm"))")
+    let info = ["Compliance report"]
     event.text = info.reduce("", {$0 + $1 + "\n"})
     event.color = .red
     timelineContainer.timeline.layoutAttributes = [EventLayoutAttributes(event)]
