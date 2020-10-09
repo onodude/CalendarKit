@@ -438,7 +438,7 @@ public final class TimelineView: UIView {
     overlappingEvents.removeAll()
 
     let maxNumberOfEvents: CGFloat = 3
-    let eventWidth: CGFloat = kScreenWidth / 2.5
+    let eventWidth: CGFloat = UIScreen.main.bounds.width / 2.5
     var xMax: CGFloat = 0
     for overlappingEvents in groupsOfEvents {
       let totalCount = CGFloat(overlappingEvents.count)
